@@ -59,6 +59,9 @@ textarea{min-height:96px;resize:vertical}
 .voice-card{background:#f7fbff;border:1px solid #d8eaff;border-radius:18px;padding:14px;font-size:13px;line-height:1.65;color:#244057}
 .stars{color:#007dff;font-weight:900;letter-spacing:.08em;margin-bottom:4px}
 .footer{text-align:center;color:rgba(255,255,255,.85);font-size:12px;margin:18px 0 8px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+
+  
 @media(max-width:360px){.grid2{grid-template-columns:1fr}.copy{font-size:27px}}
 </style>
 </head>
@@ -109,37 +112,72 @@ textarea{min-height:96px;resize:vertical}
       <option value="MASTER">MASTER　6時間 35,000円</option>
       <option value="PREMIUM">PREMIUM　9時間 54,000円</option>
     </select>
+<p class="note">
+  ※1日の教習時間は3時間まで、MASTERコース・PREMIUMコースは複数日に分けて実施します。
+</p>
+  <div class="grid2">
+  <div>
+    <label>第一希望日<span class="required">必須</span></label>
+    <input id="firstDate" type="date" required>
+  </div>
 
-    <div class="grid2">
-      <div>
-        <label>第一希望日<span class="required">必須</span></label>
-        <input id="firstDate" type="date" required>
-      </div>
-      <div>
-        <label>第一希望時間<span class="required">必須</span></label>
-        <select id="firstTime" required><option value="">日付を選ぶと表示</option></select>
-      </div>
-    </div>
-    <div class="grid2">
-      <div>
-        <label>第二希望日</label>
-        <input id="secondDate" type="date">
-      </div>
-      <div>
-        <label>第二希望時間</label>
-        <select id="secondTime"><option value="">日付を選ぶと表示</option></select>
-      </div>
+  <div>
+    <label>第一希望時間<span class="required">必須</span></label>
+    <select id="firstTime" required>
+      <option value="">日付を選ぶと表示</option>
+    </select>
+  </div>
+</div>
+
+<div class="grid2">
+  <div>
+    <label>第二希望日</label>
+    <input id="secondDate" type="date">
+  </div>
+
+  <div>
+    <label>第二希望時間</label>
+    <select id="secondTime">
+      <option value="">日付を選ぶと表示</option>
+    </select>
+  </div>
+</div>
+
+<div id="thirdLessonBox" style="display:none;">
+  <div class="grid2">
+    <div>
+      <label>第三希望日</label>
+      <input id="thirdDate" type="date">
     </div>
 
-    <div class="section-title">免許情報・伝達事項</div>
-    <label>⑧ 免許証有効期限<span class="required">必須</span></label>
-    <div class="grid2">
-      <select id="licenseYear" required><option value="">年</option></select>
-      <select id="licenseMonth" required><option value="">月</option></select>
+    <div>
+      <label>第三希望時間</label>
+      <select id="thirdTime">
+        <option value="">日付を選ぶと表示</option>
+      </select>
     </div>
-    <label>⑨ 伝達事項</label>
-    <textarea id="message" placeholder="例：駐車が苦手です／高速道路が不安です"></textarea>
+  </div>
+</div>
 
+<div class="section-title">免許情報・伝達事項</div>
+
+<label>⑧ 免許証有効期限<span class="required">必須</span></label>
+<div class="grid3">
+  <select id="licenseYear" required>
+    <option value="">年</option>
+  </select>
+
+  <select id="licenseMonth" required>
+    <option value="">月</option>
+  </select>
+
+  <select id="licenseDay" required>
+    <option value="">日</option>
+  </select>
+</div>
+
+<label>⑨ 伝達事項</label>
+<textarea id="message" placeholder="例：駐車が苦手です／高速道路が不安です"></textarea>
     <div class="notice">
       日付を選ぶと、公開AAA予約枠カレンダーの空き時間だけが表示されます。<br>
       送信だけでは予約確定ではありません。内容確認後、AAAより折り返しご連絡し、日程確定となります。
@@ -165,13 +203,29 @@ const GAS_URL = "https://script.google.com/macros/s/AKfycbz_rJO_fg5QU63NPwGpuCqQ
 
 function initSelects(){
   const age = document.getElementById("age");
-  for(let i=18;i<=55;i++){ const opt=document.createElement("option"); opt.value=i+"歳"; opt.textContent=i+"歳"; age.appendChild(opt); }
-  const y = document.getElementById("licenseYear");
-  for(let i=2026;i<=2035;i++){ const opt=document.createElement("option"); opt.value=i+"年"; opt.textContent=i+"年"; y.appendChild(opt); }
-  const m = document.getElementById("licenseMonth");
-  for(let i=1;i<=12;i++){ const opt=document.createElement("option"); opt.value=i+"月"; opt.textContent=i+"月"; m.appendChild(opt); }
-}
+  const licenseYear = document.getElementById("licenseYear");
+  const licenseMonth = document.getElementById("licenseMonth");
+  const licenseDay = document.getElementById("licenseDay");
 
+  for(let i = 18; i <= 55; i++){
+    const opt = document.createElement("option");
+    opt.value = i + "歳";
+    opt.textContent = i + "歳";
+    age.appendChild(opt);
+  }
+
+  for(let y = 2026; y <= 2035; y++){
+    licenseYear.innerHTML += `<option value="${y}">${y}</option>`;
+  }
+
+  for(let m = 1; m <= 12; m++){
+    licenseMonth.innerHTML += `<option value="${m}">${m}</option>`;
+  }
+
+  for(let d = 1; d <= 31; d++){
+    licenseDay.innerHTML += `<option value="${d}">${d}</option>`;
+  }
+}
 function setStatus(type, text){ const box = document.getElementById("status"); box.className = "status " + type; box.textContent = text; }
 
 function loadSlots(dateInputId, timeSelectId) {
@@ -198,31 +252,53 @@ function loadSlots(dateInputId, timeSelectId) {
   document.body.appendChild(script);
 }
 
-document.getElementById("firstDate").addEventListener("change", function(){ loadSlots("firstDate", "firstTime"); });
-document.getElementById("secondDate").addEventListener("change", function(){ loadSlots("secondDate", "secondTime"); });
+document.getElementById("firstDate").addEventListener("change", function(){
+  loadSlots("firstDate", "firstTime");
+});
 
+document.getElementById("secondDate").addEventListener("change", function(){
+  loadSlots("secondDate", "secondTime");
+});
+
+document.getElementById("thirdDate").addEventListener("change", function(){
+  loadSlots("thirdDate", "thirdTime");
+});
+
+document.getElementById("course").addEventListener("change", function () {
+  const thirdBox = document.getElementById("thirdLessonBox");
+
+  if (
+    this.value.includes("MASTER") ||
+    this.value.includes("PREMIUM")
+  ) {
+    thirdBox.style.display = "block";
+  } else {
+    thirdBox.style.display = "none";
+    document.getElementById("thirdDate").value = "";
+    document.getElementById("thirdTime").value = "";
+    document.getElementById("thirdTime").innerHTML = '<option value="">日付を選ぶと表示</option>';
+  }
+});
+  
 function formatDateForDB(dateValue, timeValue) { if (!dateValue || !timeValue) return ""; const parts = dateValue.split("-"); return Number(parts[1]) + "月" + Number(parts[2]) + "日" + timeValue; }
 
 document.getElementById("aaaReservationForm").addEventListener("submit", async function(event) {
   event.preventDefault();
 
-const licenseYear =
-    parseInt(document.getElementById("licenseYear").value);
+const licenseYear = parseInt(document.getElementById("licenseYear").value);
+const licenseMonth = parseInt(document.getElementById("licenseMonth").value);
+const licenseDay = parseInt(document.getElementById("licenseDay").value);
 
-  const licenseMonth =
-    parseInt(document.getElementById("licenseMonth").value);
+const firstDateValue = document.getElementById("firstDate").value;
+const firstDate = new Date(firstDateValue + "T00:00:00");
 
-  const firstDate =
-    new Date(document.getElementById("firstDate").value);
+const licenseDate = new Date(
+  licenseYear,
+  licenseMonth - 1,
+  licenseDay
+);
 
-  const lessonYear = firstDate.getFullYear();
-  const lessonMonth = firstDate.getMonth() + 1;
-
-  if (
-    licenseYear < lessonYear ||
-    (licenseYear === lessonYear &&
-     licenseMonth < lessonMonth)
-  ) {
+if (licenseDate < firstDate) {
 
     if (!confirm(
       "教習当日に免許証を確認させていただきます。\nその時点で免許証の有効期限が切れている場合、教習は実施できません。\nあらかじめ免許更新をお願いいたします。\n\nこのまま申し込みますか？"
@@ -239,10 +315,24 @@ const licenseYear =
   button.disabled = true;
   button.textContent = "送信中...";
 
-  const license = document.getElementById("licenseYear").value + document.getElementById("licenseMonth").value;
-  const firstText = formatDateForDB(document.getElementById("firstDate").value, document.getElementById("firstTime").value);
-  const secondText = formatDateForDB(document.getElementById("secondDate").value, document.getElementById("secondTime").value);
+  const license =
+  document.getElementById("licenseYear").value + "年" +
+  document.getElementById("licenseMonth").value + "月" +
+  document.getElementById("licenseDay").value + "日";
+const firstText = formatDateForDB(
+  document.getElementById("firstDate").value,
+  document.getElementById("firstTime").value
+);
 
+const secondText = formatDateForDB(
+  document.getElementById("secondDate").value,
+  document.getElementById("secondTime").value
+);
+
+const thirdText = formatDateForDB(
+  document.getElementById("thirdDate").value,
+  document.getElementById("thirdTime").value
+);
   const data = {
     name: document.getElementById("name").value,
     address: document.getElementById("address").value,
@@ -253,17 +343,27 @@ const licenseYear =
     history: document.getElementById("paperHistory").value,
     course: document.getElementById("course").value,
     first: firstText,
-    second: secondText,
-    license: license,
+second: secondText,
+third: thirdText,
+license: license,
     memo: document.getElementById("message").value
   };
 
   try {
     await fetch(GAS_URL, { method: "POST", mode: "no-cors", headers: {"Content-Type": "text/plain;charset=utf-8"}, body: JSON.stringify(data) });
     setStatus("ok","送信しました。内容確認後、AAAよりご連絡します。");
-    this.reset();
-    document.getElementById("firstTime").innerHTML = '<option value="">日付を選ぶと表示</option>';
-    document.getElementById("secondTime").innerHTML = '<option value="">日付を選ぶと表示</option>';
+this.reset();
+
+document.getElementById("firstTime").innerHTML =
+  '<option value="">日付を選ぶと表示</option>';
+
+document.getElementById("secondTime").innerHTML =
+  '<option value="">日付を選ぶと表示</option>';
+
+document.getElementById("thirdTime").innerHTML =
+  '<option value="">日付を選ぶと表示</option>';
+
+document.getElementById("thirdLessonBox").style.display = "none";
   } catch (error) {
     setStatus("err","送信できませんでした。時間を置いて再度お試しください。");
   } finally {
