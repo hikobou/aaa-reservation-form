@@ -88,6 +88,9 @@ textarea{min-height:96px;resize:vertical}
     <label>⑤ 携帯番号<span class="required">必須</span></label>
     <input id="phone" type="tel" placeholder="例：090-1234-5678" required>
 
+    <label>メールアドレス<span class="required">必須</span></label>
+    <input id="email" type="email" placeholder="例：example@gmail.com" required>
+
     <div class="section-title">教習内容</div>
     <label>⑥ ペーパー歴<span class="required">必須</span></label>
     <select id="paperHistory" required>
@@ -189,8 +192,7 @@ function loadSlots(dateInputId, timeSelectId) {
   const script = document.createElement("script");
   script.src = GAS_URL + "?action=slots&date=" + encodeURIComponent(dateValue) + "&callback=" + callbackName;
   script.onerror = function() {
-  alert("GASの読み込みに失敗しました。URLを確認してください：\n" + script.src);
-  select.innerHTML = '<option value="">空き時間を取得できませんでした</option>';
+  select.innerHTML = '<option value="">空き時間を取得できませんでした</option>'
   delete window[callbackName];
 };
   document.body.appendChild(script);
@@ -247,6 +249,7 @@ const licenseYear =
     age: document.getElementById("age").value,
     place: document.getElementById("meetingPlace").value,
     phone: document.getElementById("phone").value,
+    email: document.getElementById("email").value,
     history: document.getElementById("paperHistory").value,
     course: document.getElementById("course").value,
     first: firstText,
