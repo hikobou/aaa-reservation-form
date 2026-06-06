@@ -87,7 +87,28 @@ textarea{min-height:96px;resize:vertical}
     <label>③ 年齢<span class="required">必須</span></label>
     <select id="age" required><option value="">選択してください</option></select>
     <label>④ 出張先・集合場所<span class="required">必須</span></label>
-    <input id="meetingPlace" type="text" placeholder="例：阪急武庫之荘駅" required>
+
+<select id="meetingPlace" required>
+  <option value="">選択してください</option>
+  <option value="阪急 西宮北口駅">阪急 西宮北口駅</option>
+  <option value="阪急 武庫之荘駅">阪急 武庫之荘駅</option>
+  <option value="阪急 塚口駅">阪急 塚口駅</option>
+  <option value="阪急 宝塚駅">阪急 宝塚駅</option>
+  <option value="阪神 尼崎駅">阪神 尼崎駅</option>
+  <option value="阪神 西宮駅">阪神 西宮駅</option>
+  <option value="阪神 鳴尾・武庫川女子大前駅">阪神 鳴尾・武庫川女子大前駅</option>
+  <option value="JR 立花駅">JR 立花駅</option>
+  <option value="JR 西宮駅">JR 西宮駅</option>
+  <option value="JR 尼崎駅">JR 尼崎駅</option>
+  <option value="JR 宝塚駅">JR 宝塚駅</option>
+  <option value="JR 伊丹駅">JR 伊丹駅</option>
+  <option value="その他住所">その他住所を指定する</option>
+</select>
+
+<div id="meetingAddressBox" style="display:none;">
+  <label>出張先住所<span class="required">必須</span></label>
+  <input id="meetingAddress" type="text" placeholder="例：尼崎市武庫之荘1丁目付近">
+</div>
     <label>⑤ 携帯番号<span class="required">必須</span></label>
     <input id="phone" type="tel" placeholder="例：090-1234-5678" required>
 
@@ -263,7 +284,19 @@ document.getElementById("secondDate").addEventListener("change", function(){
 document.getElementById("thirdDate").addEventListener("change", function(){
   loadSlots("thirdDate", "thirdTime");
 });
+document.getElementById("meetingPlace").addEventListener("change", function(){
+  const addressBox = document.getElementById("meetingAddressBox");
+  const addressInput = document.getElementById("meetingAddress");
 
+  if (this.value === "その他住所") {
+    addressBox.style.display = "block";
+    addressInput.required = true;
+  } else {
+    addressBox.style.display = "none";
+    addressInput.required = false;
+    addressInput.value = "";
+  }
+});
 document.getElementById("course").addEventListener("change", function () {
   const thirdBox = document.getElementById("thirdLessonBox");
 
@@ -337,7 +370,10 @@ const thirdText = formatDateForDB(
     name: document.getElementById("name").value,
     address: document.getElementById("address").value,
     age: document.getElementById("age").value,
-    place: document.getElementById("meetingPlace").value,
+    place:
+  document.getElementById("meetingPlace").value === "その他住所"
+    ? document.getElementById("meetingAddress").value
+    : document.getElementById("meetingPlace").value,
     phone: document.getElementById("phone").value,
     email: document.getElementById("email").value,
     history: document.getElementById("paperHistory").value,
