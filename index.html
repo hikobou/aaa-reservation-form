@@ -203,6 +203,33 @@ function formatDateForDB(dateValue, timeValue) { if (!dateValue || !timeValue) r
 
 document.getElementById("aaaReservationForm").addEventListener("submit", async function(event) {
   event.preventDefault();
+
+const licenseYear =
+    parseInt(document.getElementById("licenseYear").value);
+
+  const licenseMonth =
+    parseInt(document.getElementById("licenseMonth").value);
+
+  const firstDate =
+    new Date(document.getElementById("firstDate").value);
+
+  const lessonYear = firstDate.getFullYear();
+  const lessonMonth = firstDate.getMonth() + 1;
+
+  if (
+    licenseYear < lessonYear ||
+    (licenseYear === lessonYear &&
+     licenseMonth < lessonMonth)
+  ) {
+
+    if (!confirm(
+      "教習当日に免許証を確認させていただきます。\nその時点で免許証の有効期限が切れている場合、教習は実施できません。\nあらかじめ免許更新をお願いいたします。\n\nこのまま申し込みますか？"
+    )) {
+      return;
+    }
+
+  }
+  
   const firstTime = document.getElementById("firstTime").value;
   if(!firstTime || firstTime.includes("表示") || firstTime.includes("ありません") || firstTime.includes("確認中")){ setStatus("err","第一希望時間を選択してください。"); return; }
 
