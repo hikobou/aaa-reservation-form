@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ペーパードライバー教室AAA｜予約申し込みフォーム</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Yu Gothic","Meiryo",sans-serif;
+  min-height:100vh;
+  padding:18px;
+  color:#102033;
+  overflow-x:hidden;
+  background:
+    radial-gradient(circle at 92% 4%,rgba(255,255,255,.25) 0px,rgba(0,225,255,.20) 40px,rgba(0,150,255,.12) 70px,transparent 110px),
+    radial-gradient(circle at 92% 4%,transparent 0px,transparent 90px,rgba(0,210,255,.20) 91px,rgba(0,210,255,.20) 102px,transparent 103px),
+    radial-gradient(circle at 92% 4%,transparent 0px,transparent 125px,rgba(0,105,255,.18) 126px,rgba(0,105,255,.18) 138px,transparent 139px),
+    radial-gradient(circle at 92% 4%,transparent 0px,transparent 160px,rgba(145,90,255,.14) 161px,rgba(145,90,255,.14) 174px,transparent 175px),
+    linear-gradient(160deg,#07152e 0%,#0a2f61 50%,#0a6db2 100%);
+}
+body::after{
+  content:"";
+  position:fixed;
+  top:-70px;
+  right:-70px;
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.20),rgba(0,220,255,.15) 35%,rgba(0,100,255,.08) 55%,transparent 70%);
+  filter:blur(12px);
+  pointer-events:none;
+}
+.wrap{max-width:430px;margin:0 auto;position:relative;z-index:1}
+.hero{color:white;padding:28px 8px 18px;text-align:center}
+.badge{display:inline-block;padding:8px 15px;border-radius:999px;font-size:12px;letter-spacing:.08em;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);backdrop-filter:blur(10px)}
+.copy{font-size:30px;font-weight:900;line-height:1.25;margin:18px 0 10px;letter-spacing:.04em;text-shadow:0 8px 24px rgba(0,0,0,.24)}
+.subcopy{font-size:14px;line-height:1.8;opacity:.93;margin:0}
+.trust{margin:18px 0 0;display:grid;gap:8px}
+.trust div{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);border-radius:14px;padding:10px;font-size:13px;backdrop-filter:blur(10px)}
+form{margin-top:18px;padding:22px;border-radius:28px;background:rgba(255,255,255,.93);border:1px solid rgba(255,255,255,.58);box-shadow:0 28px 70px rgba(0,18,60,.42);backdrop-filter:blur(18px)}
+.section-title{font-size:15px;font-weight:900;margin:24px 0 13px;color:#082b55;display:flex;align-items:center;gap:8px}
+.section-title:first-child{margin-top:0}
+.section-title::before{content:"";width:8px;height:22px;border-radius:999px;background:linear-gradient(180deg,#00d5ff,#006eff)}
+label{display:block;margin:13px 0 7px;font-size:13px;font-weight:800;color:#243a52}
+.required{color:#e53935;margin-left:4px;font-size:12px}
+input,select,textarea{width:100%;padding:15px;border-radius:16px;border:1px solid #d4e3f4;background:rgba(247,251,255,.96);font-size:16px;outline:none}
+input:focus,select:focus,textarea:focus{background:#fff;border-color:#008cff;box-shadow:0 0 0 4px rgba(0,140,255,.13)}
+textarea{min-height:96px;resize:vertical}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.notice{margin-top:20px;padding:15px;border-radius:18px;background:linear-gradient(135deg,#eef8ff,#ffffff);border:1px solid #d1eaff;color:#244a68;font-size:13px;line-height:1.75}
+.status{margin-top:14px;padding:13px;border-radius:16px;font-size:13px;line-height:1.6;display:none}
+.status.ok{display:block;background:#eaf8ef;border:1px solid #bde8cb;color:#185c2f}
+.status.err{display:block;background:#fff0f0;border:1px solid #ffc6c6;color:#8a1f1f}
+.submit{width:100%;margin-top:22px;padding:18px;border:none;border-radius:20px;color:white;font-size:17px;font-weight:900;letter-spacing:.04em;background:linear-gradient(135deg,#006eff,#00c2ff);box-shadow:0 16px 34px rgba(0,126,232,.42);cursor:pointer}
+.submit:disabled{opacity:.62;cursor:not-allowed}
+.voice{margin-top:18px;display:grid;gap:10px}
+.voice-card{background:#f7fbff;border:1px solid #d8eaff;border-radius:18px;padding:14px;font-size:13px;line-height:1.65;color:#244057}
+.stars{color:#007dff;font-weight:900;letter-spacing:.08em;margin-bottom:4px}
+.footer{text-align:center;color:rgba(255,255,255,.85);font-size:12px;margin:18px 0 8px}
+@media(max-width:360px){.grid2{grid-template-columns:1fr}.copy{font-size:27px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="badge">SMART RESERVATION</div>
+    <div class="copy">もう一度、<br>運転する自信を。</div>
+    <p class="subcopy">ペーパードライバー教室AAA<br>スマホ専用 予約申し込みフォーム</p>
+    <div class="trust">
+      <div>元公安委員会指定教習所・技能検定員が担当</div>
+      <div>27年の教習経験で、やさしく丁寧にサポート</div>
+      <div>尼崎・伊丹・西宮・宝塚エリア対応</div>
+    </div>
+  </div>
+
+  <form id="aaaReservationForm">
+    <div class="section-title">お客様情報</div>
+    <label>① お名前<span class="required">必須</span></label>
+    <input id="name" type="text" placeholder="例：山田花子" required>
+    <label>② ご住所<span class="required">必須</span></label>
+    <input id="address" type="text" placeholder="例：尼崎市武庫之荘" required>
+    <label>③ 年齢<span class="required">必須</span></label>
+    <select id="age" required><option value="">選択してください</option></select>
+    <label>④ 出張先・集合場所<span class="required">必須</span></label>
+    <input id="meetingPlace" type="text" placeholder="例：阪急武庫之荘駅" required>
+    <label>⑤ 携帯番号<span class="required">必須</span></label>
+    <input id="phone" type="tel" placeholder="例：090-1234-5678" required>
+
+    <div class="section-title">教習内容</div>
+    <label>⑥ ペーパー歴<span class="required">必須</span></label>
+    <select id="paperHistory" required>
+      <option value="">選択してください</option>
+      <option value="1年未満">1年未満</option>
+      <option value="1〜3年">1〜3年</option>
+      <option value="3〜5年">3〜5年</option>
+      <option value="5〜10年">5〜10年</option>
+      <option value="10年以上">10年以上</option>
+      <option value="免許取得後ほぼ運転なし">免許取得後ほぼ運転なし</option>
+    </select>
+    <label>⑦ 希望コース<span class="required">必須</span></label>
+    <select id="course" required>
+      <option value="">選択してください</option>
+      <option value="BASIC">BASIC　3時間 18,000円</option>
+      <option value="MASTER">MASTER　6時間 35,000円</option>
+      <option value="PREMIUM">PREMIUM　9時間 54,000円</option>
+    </select>
+
+    <div class="grid2">
+      <div>
+        <label>第一希望日<span class="required">必須</span></label>
+        <input id="firstDate" type="date" required>
+      </div>
+      <div>
+        <label>第一希望時間<span class="required">必須</span></label>
+        <select id="firstTime" required><option value="">日付を選ぶと表示</option></select>
+      </div>
+    </div>
+    <div class="grid2">
+      <div>
+        <label>第二希望日</label>
+        <input id="secondDate" type="date">
+      </div>
+      <div>
+        <label>第二希望時間</label>
+        <select id="secondTime"><option value="">日付を選ぶと表示</option></select>
+      </div>
+    </div>
+
+    <div class="section-title">免許情報・伝達事項</div>
+    <label>⑧ 免許証有効期限<span class="required">必須</span></label>
+    <div class="grid2">
+      <select id="licenseYear" required><option value="">年</option></select>
+      <select id="licenseMonth" required><option value="">月</option></select>
+    </div>
+    <label>⑨ 伝達事項</label>
+    <textarea id="message" placeholder="例：駐車が苦手です／高速道路が不安です"></textarea>
+
+    <div class="notice">
+      日付を選ぶと、公開AAA予約枠カレンダーの空き時間だけが表示されます。<br>
+      送信だけでは予約確定ではありません。内容確認後、AAAより折り返しご連絡し、日程確定となります。
+    </div>
+
+    <button class="submit" type="submit">無料相談・予約を申し込む</button>
+    <div id="status" class="status"></div>
+
+    <div class="section-title">お客様の声</div>
+    <div class="voice">
+      <div class="voice-card"><div class="stars">★★★★★</div>「運転が怖くなくなりました。落ち着いて教えてくれたので安心できました。」<br>40代女性</div>
+      <div class="voice-card"><div class="stars">★★★★★</div>「苦手だった車庫入れが少しずつ分かるようになりました。」<br>30代主婦</div>
+      <div class="voice-card"><div class="stars">★★★★★</div>「久しぶりの運転でしたが、やさしく教えてもらえて助かりました。」<br>50代女性</div>
+    </div>
+  </form>
+
+  <div class="footer">Paper Driver School AAA</div>
+</div>
+
+<script>
+const GAS_URL = "https://script.google.com/macros/s/AKfycbz_rJO_fg5QU63NPwGpuCqQdIoWa910UPeS21hgcQKwFWerssJo4lO6mYFjNFOnvcjXeA/exec";
+
+function initSelects(){
+  const age = document.getElementById("age");
+  for(let i=18;i<=55;i++){ const opt=document.createElement("option"); opt.value=i+"歳"; opt.textContent=i+"歳"; age.appendChild(opt); }
+  const y = document.getElementById("licenseYear");
+  for(let i=2026;i<=2035;i++){ const opt=document.createElement("option"); opt.value=i+"年"; opt.textContent=i+"年"; y.appendChild(opt); }
+  const m = document.getElementById("licenseMonth");
+  for(let i=1;i<=12;i++){ const opt=document.createElement("option"); opt.value=i+"月"; opt.textContent=i+"月"; m.appendChild(opt); }
+}
+
+function setStatus(type, text){ const box = document.getElementById("status"); box.className = "status " + type; box.textContent = text; }
+
+function loadSlots(dateInputId, timeSelectId) {
+  const dateValue = document.getElementById(dateInputId).value;
+  const select = document.getElementById(timeSelectId);
+  if (!dateValue) { select.innerHTML = '<option value="">日付を選ぶと表示</option>'; return; }
+  select.innerHTML = '<option value="">空き時間を確認中...</option>';
+
+  const callbackName = "slotCallback_" + Date.now() + "_" + Math.floor(Math.random() * 10000);
+  window[callbackName] = function(slots) {
+    select.innerHTML = "";
+    if (!slots || slots.length === 0) { select.innerHTML = '<option value="">この日の空き枠はありません</option>'; delete window[callbackName]; return; }
+    select.innerHTML = '<option value="">時間を選択してください</option>';
+    slots.forEach(slot => { const option = document.createElement("option"); option.value = slot.label; option.textContent = slot.label; select.appendChild(option); });
+    delete window[callbackName];
+  };
+
+  const script = document.createElement("script");
+  script.src = GAS_URL + "?action=slots&date=" + encodeURIComponent(dateValue) + "&callback=" + callbackName;
+  script.onerror = function() { select.innerHTML = '<option value="">空き時間を取得できませんでした</option>'; delete window[callbackName]; };
+  document.body.appendChild(script);
+}
+
+document.getElementById("firstDate").addEventListener("change", function(){ loadSlots("firstDate", "firstTime"); });
+document.getElementById("secondDate").addEventListener("change", function(){ loadSlots("secondDate", "secondTime"); });
+
+function formatDateForDB(dateValue, timeValue) { if (!dateValue || !timeValue) return ""; const parts = dateValue.split("-"); return Number(parts[1]) + "月" + Number(parts[2]) + "日" + timeValue; }
+
+document.getElementById("aaaReservationForm").addEventListener("submit", async function(event) {
+  event.preventDefault();
+  const firstTime = document.getElementById("firstTime").value;
+  if(!firstTime || firstTime.includes("表示") || firstTime.includes("ありません") || firstTime.includes("確認中")){ setStatus("err","第一希望時間を選択してください。"); return; }
+
+  const button = document.querySelector(".submit");
+  button.disabled = true;
+  button.textContent = "送信中...";
+
+  const license = document.getElementById("licenseYear").value + document.getElementById("licenseMonth").value;
+  const firstText = formatDateForDB(document.getElementById("firstDate").value, document.getElementById("firstTime").value);
+  const secondText = formatDateForDB(document.getElementById("secondDate").value, document.getElementById("secondTime").value);
+
+  const data = {
+    name: document.getElementById("name").value,
+    address: document.getElementById("address").value,
+    age: document.getElementById("age").value,
+    place: document.getElementById("meetingPlace").value,
+    phone: document.getElementById("phone").value,
+    history: document.getElementById("paperHistory").value,
+    course: document.getElementById("course").value,
+    first: firstText,
+    second: secondText,
+    license: license,
+    memo: document.getElementById("message").value
+  };
+
+  try {
+    await fetch(GAS_URL, { method: "POST", mode: "no-cors", headers: {"Content-Type": "text/plain;charset=utf-8"}, body: JSON.stringify(data) });
+    setStatus("ok","送信しました。内容確認後、AAAよりご連絡します。");
+    this.reset();
+    document.getElementById("firstTime").innerHTML = '<option value="">日付を選ぶと表示</option>';
+    document.getElementById("secondTime").innerHTML = '<option value="">日付を選ぶと表示</option>';
+  } catch (error) {
+    setStatus("err","送信できませんでした。時間を置いて再度お試しください。");
+  } finally {
+    button.disabled = false;
+    button.textContent = "無料相談・予約を申し込む";
+  }
+});
+
+
+window.addEventListener("DOMContentLoaded", function() {
+  if (document.getElementById("firstDate").value) {
+    loadSlots("firstDate", "firstTime");
+  }
+
+  if (document.getElementById("secondDate").value) {
+    loadSlots("secondDate", "secondTime");
+  }
+});
+
+initSelects();
+</script>
+</body>
+</html>
