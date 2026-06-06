@@ -187,7 +187,11 @@ function loadSlots(dateInputId, timeSelectId) {
 
   const script = document.createElement("script");
   script.src = GAS_URL + "?action=slots&date=" + encodeURIComponent(dateValue) + "&callback=" + callbackName;
-  script.onerror = function() { select.innerHTML = '<option value="">空き時間を取得できませんでした</option>'; delete window[callbackName]; };
+  script.onerror = function() {
+  alert("GASの読み込みに失敗しました。URLを確認してください：\n" + script.src);
+  select.innerHTML = '<option value="">空き時間を取得できませんでした</option>';
+  delete window[callbackName];
+};
   document.body.appendChild(script);
 }
 
